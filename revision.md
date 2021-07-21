@@ -20,3 +20,7 @@ v1.4
 - 将mrs_leastql.py 更名为mrs_linear_fit.py
 - 将mrs_linear_fit.py中增加另一种实现线性拟合的方法，并计算r和R2.
 
+v1.5
+2021/07/21 16:12
+- 完成mrs_linear_fit.py 中的基本拟合功能，并能够画出图形。
+
