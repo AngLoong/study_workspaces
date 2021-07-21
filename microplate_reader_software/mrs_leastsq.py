@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt
 from numpy import polyfit, poly1d
+from scipy import stats
 
 
 def function_get_liner_exp(x, y):
