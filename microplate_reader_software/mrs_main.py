@@ -10,9 +10,10 @@ import numpy as np
 import pandas as pd
 
 
-class PlateData(object):
-    """
-    该类为每板酶标仪的数据
-    """
+def main():
+    pass
 
+
+if __name__ == '__main__':
+    main()
 

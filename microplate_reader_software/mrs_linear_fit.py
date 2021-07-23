@@ -88,14 +88,15 @@ class LinearFit(object):
         else:
             return False
 
-linear1=LinearFit([1,2,3,4,5],[0.8,1.9,3.0,3.8,5.1],5)
-#linear1.axis_x_data = [1,2,3,4,5]
-#linear1.axis_y_data = [0.8,1.9,3.0,3.8,5.1]
-linear1.calculate()
-#print(linear1)
-x = [1,2,3,4,5]
-y = [0.8,1.9,3.0,3.8,5.1]
-#line_x = [1,5]
-#plt.scatter(x,y)
-#plt.plot(line_x,line_y,color='r')
-#plt.show()
+if __name__ == '__main__':
+    linear1=LinearFit([1,2,3,4,5],[0.8,1.9,3.0,3.8,5.1],5)
+    #linear1.axis_x_data = [1,2,3,4,5]
+    #linear1.axis_y_data = [0.8,1.9,3.0,3.8,5.1]
+    linear1.calculate()
+    #print(linear1)
+    x = [1,2,3,4,5]
+    y = [0.8,1.9,3.0,3.8,5.1]
+    #line_x = [1,5]
+    #plt.scatter(x,y)
+    #plt.plot(line_x,line_y,color='r')
+    #plt.show()
