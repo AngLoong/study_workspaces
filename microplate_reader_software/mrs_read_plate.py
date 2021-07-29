@@ -38,7 +38,25 @@ class ReadPlate():
 
     def read_plate(self):
         self.com.connect()
-        result = self.com.read_plate(self.filter["du"],\
+        self.com.send_read_plate(self.filter["du"],\
+                            self.filter["first_filter_num"],\
+                            self.filter["second_filter_num"],\
+                            self.shake["strength"],\
+                            self.shake["seconds"],\
+                            self.mode, \
+                            self.kinetics["times"], \
+                            self.kinetics["seconds"],\
+                            self.kinetics["minutes"])
+        result = self.com.receive_result()
+        self.com.disconnect()
+        for i in range(96):
+            self.data[i] = result[i]
+        print(self.data)
+
+    def read_kinetics(self):
+        df=pd.DataFrame()
+        self.com.connect()
+        self.com.send_read_plate(self.filter["du"],\
                             self.filter["first_filter_num"],\
                             self.filter["second_filter_num"],\
                             self.shake["strength"],\
@@ -47,14 +65,19 @@ class ReadPlate():
                             self.kinetics["times"],\
                             self.kinetics["seconds"],\
                             self.kinetics["minutes"])
+        for i in range(self.kinetics["times"]):
+            result = self.com.receive_result()
+            for j in range(96):
+                self.data[j] = result[j]
+            df.insert(i, str(i+1), self.data)
+            print(result)
         self.com.disconnect()
-        for i in range(96):
-            self.data[i] = result[i]
-        print(self.data)
-        print("A1:",self.data["A1"])
-        print("B1:",self.data["B1"])
-        print("A2:",self.data["A2"])
+        print(df)
+
 
 if __name__ == '__main__':
     aa = ReadPlate()
-    aa.read_plate()
+    aa.mode = 3
+    aa.kinetics["times"] = 2
+    aa.kinetics["seconds"] = 1
+    aa.read_kinetics()

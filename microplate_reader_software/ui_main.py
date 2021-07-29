@@ -75,7 +75,10 @@ class Ui_Main(object):
 
     def new_project(self):
         self.ui_new_project=Ui_ProjectAttributes()
-        self.ui_new_project.ui.show()
+        if self.ui_new_project.ui.exec()== 1:
+            print("OK")
+        else:
+            print("cancel")
 
 
 if __name__ == '__main__':

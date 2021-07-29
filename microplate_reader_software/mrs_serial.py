@@ -30,21 +30,7 @@ class SerialCommunication():
         self.__ser__.close()
         print("disconnect ok!!")
 
-    def door(self):
-        self.__send_door()
-
-    def read_plate(self,dua,first_filter_num,second_filter_num,\
-                   shake_strength,shake_seconds,\
-                   mode,\
-                   kinetics_times,kinetics_seconds,kinetics_minutes):
-        self.__send_read_plate(dua,first_filter_num,second_filter_num,\
-                               shake_strength,shake_seconds,\
-                               mode,\
-                               kinetics_times,kinetics_seconds,kinetics_minutes)
-        ret = self.__receive_result()
-        return ret
-
-    def __send_door(self):
+    def send_door(self):
         ret = self.__ser__.write(self.command_send_head+self.command_send_door+self.command_send_tail)
         return ret
 
@@ -55,7 +41,7 @@ class SerialCommunication():
         num += int(data[4]) * 0.001
         return num
 
-    def __send_read_plate(self,dua,first_filter_num,second_filter_num,\
+    def send_read_plate(self,dua,first_filter_num,second_filter_num,\
                    shake_strength,shake_seconds,\
                    mode,\
                    kinetics_times,kinetics_seconds,kinetics_minutes):
@@ -68,7 +54,7 @@ class SerialCommunication():
         ret = self.__ser__.write(command_total)
         return ret
 
-    def __receive_result(self):
+    def receive_result(self):
         re_data = self.__ser__.read(488)
         if re_data[:4] == self.command_receive_head and \
             re_data[-4:] == self.command_receive_tail:
