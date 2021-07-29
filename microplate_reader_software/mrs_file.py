@@ -7,6 +7,20 @@ import numpy as np
 from mrs_read_plate import ReadPlate
 
 
+def exort_plate_od_to_csv(file_name,od_data,write_mode):
+    list_col = []
+    for i in range(12):
+        list_col.append(od_data[i * 8:i * 8 + 8])
+    print(list_col)
+    col = list(map(chr, range(ord('A'), ord('H') + 1)))
+    ind = [str(x) for x in range(1, 13)]
+    print("IND:", ind)
+    print("COL:", col)
+    export_data1 = pd.DataFrame(list_col, index=ind, columns=col)
+    export_data1 = export_data1.transpose()
+    export_data1.to_csv(file_name,mode=write_mode)
+
+
 def export_plate_to_csv(du, first, second, od):
     export_info = pd.Series({"du:": "1", "first filter:": "450", "second filter:": "630", " ": " "})
     print(export_info)

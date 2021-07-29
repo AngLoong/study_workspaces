@@ -5,7 +5,7 @@
 import numpy as np
 import pandas as pd
 from mrs_serial import SerialCommunication
-
+import mrs_analysis
 
 class ReadPlate():
     """
@@ -33,7 +33,7 @@ class ReadPlate():
 
     def door(self):
         self.com.connect()
-        self.com.door()
+        self.com.send_door()
         self.com.disconnect()
 
     def read_plate(self):
@@ -73,11 +73,12 @@ class ReadPlate():
             print(result)
         self.com.disconnect()
         print(df)
-
+        return df
 
 if __name__ == '__main__':
     aa = ReadPlate()
     aa.mode = 3
-    aa.kinetics["times"] = 2
+    aa.kinetics["times"] = 3
     aa.kinetics["seconds"] = 1
-    aa.read_kinetics()
+    df = aa.read_kinetics()
+    mrs_analysis.ana_stability(df)

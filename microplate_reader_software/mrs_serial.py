@@ -16,7 +16,7 @@ class SerialCommunication():
     command_receive_head = bytes(b'\x7c\xc7\x7d\xd7')
     command_receive_tail = bytes(b'\xfc\xfd\xfe\xff')
 
-    def __init__(self,default_baud = 9600,default_port = "COM6",default_time_out = None):
+    def __init__(self,default_baud = 115200,default_port = "COM6",default_time_out = None):
         self.port = default_port
         self.baud_rate = default_baud
         self.time_out = default_time_out
