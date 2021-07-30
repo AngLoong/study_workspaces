@@ -75,6 +75,7 @@ class ReadPlate():
         print(df)
         return df
 
+
 if __name__ == '__main__':
     aa = ReadPlate()
     aa.mode = 3

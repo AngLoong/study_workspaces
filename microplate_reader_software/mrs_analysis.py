@@ -40,6 +40,7 @@ def ana_stability(data):
     df.insert(df.shape[1], 'check', li_check)
     df.to_csv("./cache/stability.csv")
     print(df)
+    return df
 
 
 if __name__ == '__main__':

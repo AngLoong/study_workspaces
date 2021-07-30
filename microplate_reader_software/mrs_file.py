@@ -7,7 +7,7 @@ import numpy as np
 from mrs_read_plate import ReadPlate
 
 
-def exort_plate_od_to_csv(file_name,od_data,write_mode):
+def export_plate_od_to_csv(file_name,od_data,write_mode):
     list_col = []
     for i in range(12):
         list_col.append(od_data[i * 8:i * 8 + 8])
