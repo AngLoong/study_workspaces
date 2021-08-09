@@ -67,7 +67,7 @@ def measure_test(id):
     read_plate.filter["first_filter_num"] = 2
     read_plate.filter["second_filter_num"] = 4
     read_plate.mode = 3
-    read_plate.kinetics["times"] = 5
+    read_plate.kinetics["times"] = 50
     read_plate.kinetics["seconds"] = 3
     df_data = read_plate.read_kinetics()
     df_result = ana_stability(df_data)

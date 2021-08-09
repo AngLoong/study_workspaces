@@ -25,8 +25,12 @@ class ConfigProperty(object):
         filter_setting = {"1": "405", "2": "450", "3": "492", "4": "630", "5": "", \
                           "6": "", "7": "", "8": "", "9": "", "10": "", \
                           "11": "", "12": "", "13": "", "14": "", "15": ""}
+        serial_setting = {"com":"COM6", \
+                          "baud":115200, \
+                          "time out":None}
         self.attributes = {"data path": path_data_export, \
-                           "filter settings": filter_setting}
+                           "filter settings": filter_setting, \
+                           "serial settings":serial_setting}
 
     def save(self):
         with open("./config.json", "w", encoding='utf-8') as f:
@@ -38,7 +42,8 @@ class ConfigProperty(object):
 
 if __name__ == '__main__':
     cc = ConfigProperty()
-    #print(cc)
+    print(cc)
+    #cc.reset()
     #cc.save()
     cc.load()
     print(cc)

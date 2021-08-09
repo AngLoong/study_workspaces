@@ -16,5 +16,10 @@
     "13": "",
     "14": "",
     "15": ""
+  },
+  "serial settings": {
+    "com": "COM6",
+    "baud": 115200,
+    "time out": null
   }
 }
