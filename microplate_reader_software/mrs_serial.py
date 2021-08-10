@@ -4,6 +4,7 @@
 import pandas as pd
 import serial
 import serial.tools.list_ports
+from mrs_config import ConfigProperty
 
 class SerialCommunication():
     """
@@ -17,9 +18,10 @@ class SerialCommunication():
     command_receive_tail = bytes(b'\xfc\xfd\xfe\xff')
 
     def __init__(self,default_baud = 115200,default_port = "COM6",default_time_out = None):
-        self.port = default_port
-        self.baud_rate = default_baud
-        self.time_out = default_time_out
+        cf = ConfigProperty()
+        self.port = cf.attributes["serial settings"]["com"]
+        self.baud_rate = cf.attributes["serial settings"]["baud"]
+        self.time_out = cf.attributes["serial settings"]["time out"]
         #self.__ser__ = None
 
     def connect(self):

@@ -19,7 +19,7 @@
   },
   "serial settings": {
     "com": "COM6",
-    "baud": 115200,
+    "baud": 9600,
     "time out": null
   }
 }
