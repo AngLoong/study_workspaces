@@ -1,10 +1,9 @@
 """
-文件操作
+文件操作,涉及文件的存储与读入，主要对文件的内容进行格式化。
 """
 
 import pandas as pd
 import numpy as np
-from mrs_read_plate import ReadPlate
 
 
 def export_plate_od_to_csv(file_name,od_data,write_mode):

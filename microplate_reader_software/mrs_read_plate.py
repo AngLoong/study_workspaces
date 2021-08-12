@@ -26,7 +26,7 @@ class ReadPlate():
         print(self.filter)
         self.shake = {"strength":2,"seconds":0}
         print(self.shake)
-        self.mode = 1
+        #self.mode = 1
         self.kinetics = {"times":1,"minutes":0,"seconds":5}
         print(self.kinetics)
         self.com = SerialCommunication()
@@ -43,7 +43,7 @@ class ReadPlate():
                             self.filter["second_filter_num"],\
                             self.shake["strength"],\
                             self.shake["seconds"],\
-                            self.mode, \
+                            1, \
                             self.kinetics["times"], \
                             self.kinetics["seconds"],\
                             self.kinetics["minutes"])
@@ -61,7 +61,7 @@ class ReadPlate():
                             self.filter["second_filter_num"],\
                             self.shake["strength"],\
                             self.shake["seconds"],\
-                            self.mode,\
+                            3,\
                             self.kinetics["times"],\
                             self.kinetics["seconds"],\
                             self.kinetics["minutes"])

@@ -19,6 +19,7 @@ class SerialCommunication():
 
     def __init__(self,default_baud = 115200,default_port = "COM6",default_time_out = None):
         cf = ConfigProperty()
+        cf.load()
         self.port = cf.attributes["serial settings"]["com"]
         self.baud_rate = cf.attributes["serial settings"]["baud"]
         self.time_out = cf.attributes["serial settings"]["time out"]
