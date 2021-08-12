@@ -13,15 +13,28 @@ from mrs_config import ConfigProperty
 
 
 def open_or_close_door():
+    """
+    @brief:打开或关闭仓门
+    @:return:无
+    """
     door = ReadPlate()
     door.door()
 
 
 def input_id():
+    """
+    :brief:输入仪器编号
+    :return: 仪器编号
+    """
     ret = input("输入仪器编号")
     return ret
 
 def measure_test(id):
+    """
+    测试仪器的波长和稳定性，即出厂测试
+    :param id: 仪器编号
+    :return: 无
+    """
     print("开始测量仪器......")
     read_plate = ReadPlate()
     read_plate.mode = 1
