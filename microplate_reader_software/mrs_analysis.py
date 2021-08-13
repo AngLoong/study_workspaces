@@ -76,9 +76,16 @@ def ana_get_sd(target_list):
     temp_arr = np.array(target_list)
     return temp_arr.std()
 
+
+def ana_get_cv(target_list):
+    temp_arr = np.array(target_list)
+    return temp_arr.std()/temp_arr.mean()
+
 if __name__ == '__main__':
-    temp_li = [1.0,3,4.9]
+    temp_li = [2.3,2.2,2.6,2.8,2.1,2.3,2.2,2.2,2.4]
     ret = ana_get_average(temp_li)
     print("ava:"+str(ret))
     ret = ana_get_sd(temp_li)
     print("sd:"+str(ret))
+    ret = ana_get_cv(temp_li)
+    print("cv:"+str(ret))
