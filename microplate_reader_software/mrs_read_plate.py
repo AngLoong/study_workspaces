@@ -52,6 +52,7 @@ class ReadPlate():
         for i in range(96):
             self.data[i] = result[i]
         print(self.data)
+        return  result
 
     def read_kinetics(self):
         df=pd.DataFrame()

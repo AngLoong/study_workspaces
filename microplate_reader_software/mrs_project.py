@@ -5,6 +5,7 @@
 
 import numpy as np
 import pandas as pd
+import time
 from mrs_read_plate import ReadPlate
 
 
@@ -38,7 +39,7 @@ class MeasureLayout(object):
 
 class MeasureProcess(object):
     """
-    檢測流程類
+    检测流程类 
     """
 
     process_types = ['none', 'measure', 'kinetic', 'door', 'pause']
@@ -102,9 +103,12 @@ class MeasureProcess(object):
                 read_plate.filter[key] = self._para["filter"][key]
             for key in read_plate.shake.keys():
                 read_plate.shake[key] = self._para["shake"][key]
-            data=read_plate.read_plate()
+            read_plate.read_plate()
+            data = read_plate.data
+            print("=============\n")
             print(data)
         elif self._type ==2:
+            data_list = []
             read_plate = ReadPlate()
             for key in read_plate.filter.keys():
                 read_plate.filter[key] = self._para["filter"][key]
@@ -112,7 +116,33 @@ class MeasureProcess(object):
                 read_plate.shake[key] = self._para["shake"][key]
             for key in read_plate.kinetics.keys():
                 read_plate.kinetics[key] = self._para["kinetics"][key]
-            data = read_plate.read_kinetics()
+            for i in range(self._para["kinetics"]["times"]):
+                read_plate.read_plate()
+                data_list.append(read_plate.data)
+                if i < self._para["kinetics"]["times"] -1:
+                    time.sleep(self._para["kinetics"]["minutes"]*60 + self._para["kinetics"]["seconds"])
+            print("-----------------")
+            print(data_list)
+
+
+class MeasureResult(object):
+    """
+    测量结果类
+    """
+    def __init__(self):
+        self._count = 0
+        self._current = 0
+        self.time = None
+        self.data_list = []
+        header = []
+        letter = list(map(chr, range(ord('A'), ord('H') + 1)))
+        num = [str(x) for x in range(1, 13)]
+        for j in num:
+            for i in letter:
+                header.append(i + j)
+        data = pd.Series(0, index=header)
+
+
 
 class MeasureProject(object):
     """
@@ -144,7 +174,7 @@ if __name__ == '__main__':
     print(process)
     process.set_process_pause(1)
     print(process)
-    process.set_process_measure(2)
+    process.set_process_kinetics(3,kinetics_times=3)
     print(process)
     process.execute_process()
     """
