@@ -62,37 +62,37 @@ class MeasureProcess(object):
         self._type = 0
         self._para = None
 
-    def set_process_pause(self,id,minutes=0,seconds=5):
-        self._id = id
+    def set_process_pause(self,id_num,minutes=0,seconds=5):
+        self._id = id_num
         self._type = 4
         self._para={"minutes":0,"seconds":0}
         self._para["minutes"] = minutes
         self._para["seconds"] = seconds
 
-    def set_process_door(self,id):
-        self._id = id
+    def set_process_door(self,id_num):
+        self._id = id_num
         self._type = 3
         self._para = None
 
-    def set_process_measure(self,id,\
+    def set_process_measure(self,id_num,\
                             du=1,first_filter_num=2,second_filter_num=4,\
-                            shake_strength=2,shake_seconds=0):
-        self._id = id
+                            shake_strength=2, shake_seconds=0):
+        self._id = id_num
         self._type = 1
-        filter_para = {"du":du,"first_filter_num":first_filter_num,"second_filter_num":second_filter_num}
-        shake_para = {"strength":shake_strength,"seconds":shake_seconds}
-        self._para={"filter":filter_para,"shake":shake_para}
+        filter_para = {"du": du, "first_filter_num": first_filter_num, "second_filter_num": second_filter_num}
+        shake_para = {"strength": shake_strength, "seconds": shake_seconds}
+        self._para = {"filter": filter_para, "shake": shake_para}
 
-    def set_process_kinetics(self,id,\
-                             du=1,first_filter_num=2,second_filter_num=4,\
-                             shake_strength=2,shake_seconds=0,\
-                             kinetics_times=5,kinetics_minutes=0,kinetics_seconds=5):
-        self._id = id
+    def set_process_kinetics(self, id_num,\
+                             du=1, first_filter_num=2, second_filter_num=4,\
+                             shake_strength=2, shake_seconds=0,\
+                             kinetics_times=5, kinetics_minutes=0, kinetics_seconds=5):
+        self._id = id_num
         self._type = 2
         filter_para = {"du": du, "first_filter_num": first_filter_num, "second_filter_num": second_filter_num}
         shake_para = {"strength": shake_strength, "seconds": shake_seconds}
-        kinetics_para = {"times":kinetics_times,"minutes":kinetics_minutes,"seconds":kinetics_seconds}
-        self._para = {"filter": filter_para, "shake": shake_para,"kinetics":kinetics_para}
+        kinetics_para = {"times": kinetics_times, "minutes": kinetics_minutes, "seconds": kinetics_seconds}
+        self._para = {"filter": filter_para, "shake": shake_para, "kinetics": kinetics_para}
 
     def execute_process(self):
         if self._type == 0:
@@ -107,7 +107,7 @@ class MeasureProcess(object):
             data = read_plate.data
             print("=============\n")
             print(data)
-        elif self._type ==2:
+        elif self._type == 2:
             data_list = []
             read_plate = ReadPlate()
             for key in read_plate.filter.keys():
@@ -119,7 +119,7 @@ class MeasureProcess(object):
             for i in range(self._para["kinetics"]["times"]):
                 read_plate.read_plate()
                 data_list.append(read_plate.data)
-                if i < self._para["kinetics"]["times"] -1:
+                if i < self._para["kinetics"]["times"] - 1:
                     time.sleep(self._para["kinetics"]["minutes"]*60 + self._para["kinetics"]["seconds"])
             print("-----------------")
             print(data_list)
@@ -129,21 +129,70 @@ class MeasureCalculate(object):
     """
     计算方法类
     """
-    calculate_types = ['none','blank subtraction', 'average', 'SD', 'CV%', \
-                       'standard curve', 'kinetic', \
+    calculate_types = ['none','blank subtraction', 'average', 'SD', 'CV%',\
+                       'standard curve', 'kinetic',\
                        'quantitative', 'qualitative']
+    quantitative_concentration_handle = ['concentration', 'log']
+    quantitative_od_handle = ['od', 'log', 'bi/b0*100%']
+    curve_types = ['linear']
+
     def __init__(self):
         self._id = 0
-        self._type =0
-        slef._para = None
+        self._type = 0
+        self._para = None
 
     def __str__(self):
         ret = 'ID:'
         ret += str(self._id)+'\n'
-        ret += "TYPE:"+MeasureCalculate.calculate_types[self._type]+\
+        ret += "TYPE:"+MeasureCalculate.calculate_types[self._type] +\
             '\n'
         ret += "PARA:"+str(self._para)
         return ret
+
+    def clear_calculate(self):
+        self._id = 0
+        self._type = 0
+        self._para = None
+
+    def set_calculate_blank_subtraction(self, id_num):
+        self._id = id_num
+        self._type = 1
+        self._para = None
+
+    def set_calculate_average(self, id_num, objective_area):
+        self._id = id_num
+        self._type = 2
+        self._para = {"objective area": objective_area}
+
+    def set_calculate_sd(self, id_num, objective_area):
+        self._id = id_num
+        self._type = 3
+        self._para = {"objective area": objective_area}
+
+    def set_calculate_cv(self, id_num, objective_area):
+        self._id = id_num
+        self._type = 4
+        self._para = {"objective area": objective_area}
+
+    def set_calculate_standard_curve(self, id_num):
+        self._id = id_num
+        self._type = 5
+        self._para = None
+
+    def set_calculate_kinetic(self,id_num,objective_area):
+        self._id = id_num
+        self._type = 6
+        self._para = {"objective area":objective_area}
+
+    def set_calculate_quantitative(self, id_num, curve_type=0, concentration_handle=0, od_handle=0):
+        self._id = id_num
+        self._type = 7
+        self._para = {"curve type": curve_type, "concentration handle": concentration_handle, "od handle": od_handle}
+
+    def set_calculate_qualitative(self, id_num, cutoff_formula):
+        self._id = id_num
+        self._type = 8
+        self._para = {"cutoff_formula":cutoff_formula}
 
 
 class MeasureResult(object):

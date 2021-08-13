@@ -43,5 +43,21 @@ def ana_stability(data):
     return df
 
 
+def ana_blank_subtraction(target,blank):
+    """
+    OD减去空白
+    :param target:目标值
+    :param blank: 空白值
+    :return:od value without blank
+    """
+    ret = target - blank
+    if ret < 0 :
+        return 0
+    else:
+        return ret
+
+
+
+
 if __name__ == '__main__':
     pass
