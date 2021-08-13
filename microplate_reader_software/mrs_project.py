@@ -179,10 +179,10 @@ class MeasureCalculate(object):
         self._type = 5
         self._para = None
 
-    def set_calculate_kinetic(self,id_num,objective_area):
+    def set_calculate_kinetic(self, id_num, objective_area):
         self._id = id_num
         self._type = 6
-        self._para = {"objective area":objective_area}
+        self._para = {"objective area": objective_area}
 
     def set_calculate_quantitative(self, id_num, curve_type=0, concentration_handle=0, od_handle=0):
         self._id = id_num
@@ -192,8 +192,8 @@ class MeasureCalculate(object):
     def set_calculate_qualitative(self, id_num, cutoff_formula):
         self._id = id_num
         self._type = 8
-        self._para = {"cutoff_formula":cutoff_formula}
-
+        self._para = {"cutoff_formula": cutoff_formula}
+    #TODO:计算操作
 
 class MeasureResult(object):
     """
@@ -211,8 +211,6 @@ class MeasureResult(object):
             for i in letter:
                 header.append(i + j)
         data = pd.Series(0, index=header)
-
-
 
 
 class MeasureProject(object):
@@ -234,7 +232,7 @@ if __name__ == '__main__':
     layout = MeasureLayout()
     print(layout)
     process = MeasureProcess()
-    if process._para == None:
+    if process._para is None:
         print('yyy')
     else:
         print('NNN')

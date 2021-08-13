@@ -44,6 +44,7 @@ def export_plate_to_csv(du, first, second, od):
     export_data1.to_csv("./22.csv", mode="a+")
 
 
+
 if __name__ == '__main__':
     data = []
     for i in range(12):
