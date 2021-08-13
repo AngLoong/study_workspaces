@@ -125,6 +125,27 @@ class MeasureProcess(object):
             print(data_list)
 
 
+class MeasureCalculate(object):
+    """
+    计算方法类
+    """
+    calculate_types = ['none','blank subtraction', 'average', 'SD', 'CV%', \
+                       'standard curve', 'kinetic', \
+                       'quantitative', 'qualitative']
+    def __init__(self):
+        self._id = 0
+        self._type =0
+        slef._para = None
+
+    def __str__(self):
+        ret = 'ID:'
+        ret += str(self._id)+'\n'
+        ret += "TYPE:"+MeasureCalculate.calculate_types[self._type]+\
+            '\n'
+        ret += "PARA:"+str(self._para)
+        return ret
+
+
 class MeasureResult(object):
     """
     测量结果类
@@ -144,15 +165,12 @@ class MeasureResult(object):
 
 
 
+
 class MeasureProject(object):
     """
     测量项目类，对测量项目进行管理
     """
-
-    calculate_types = ['blank subtraction', 'average', 'SD', 'CV%', \
-                       'standard curve', 'kinetic', \
-                       'quantitative', 'qualitative']
-
+    
     def __init__(self):
         self.id = 1
         self.name = 'test1'
