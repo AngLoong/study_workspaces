@@ -57,7 +57,28 @@ def ana_blank_subtraction(target,blank):
         return ret
 
 
+def ana_get_average(target_list):
+    """
+    求平均值
+    :param target_list:
+    :return:
+    """
+    temp_arr = np.array(target_list)
+    return temp_arr.mean()
 
+
+def ana_get_sd(target_list):
+    """
+    计算标准差
+    :param target_list:
+    :return:
+    """
+    temp_arr = np.array(target_list)
+    return temp_arr.std()
 
 if __name__ == '__main__':
-    pass
+    temp_li = [1.0,3,4.9]
+    ret = ana_get_average(temp_li)
+    print("ava:"+str(ret))
+    ret = ana_get_sd(temp_li)
+    print("sd:"+str(ret))
