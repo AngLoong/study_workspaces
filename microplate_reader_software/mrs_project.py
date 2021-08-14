@@ -195,6 +195,7 @@ class MeasureCalculate(object):
         self._para = {"cutoff_formula": cutoff_formula}
     #TODO:计算操作
 
+
 class MeasureResult(object):
     """
     测量结果类
@@ -203,15 +204,22 @@ class MeasureResult(object):
         self._count = 0
         self._current = 0
         self.time = None
-        self.data_list = []
         header = []
         letter = list(map(chr, range(ord('A'), ord('H') + 1)))
         num = [str(x) for x in range(1, 13)]
         for j in num:
             for i in letter:
                 header.append(i + j)
-        data = pd.Series(0, index=header)
+        self.data_current_plate = pd.Series(0.0, index=header)
+        self.data_df = pd.DataFrame(index=header)
 
+    def __str__(self):
+        ret = "count:" + str(self._count) + "\n"
+        ret += "time:" + str(self.time) + "\n"
+        ret += "data:" + str(self.data_df) + "\n"
+        return ret
+
+        
 
 class MeasureProject(object):
     """
@@ -224,24 +232,25 @@ class MeasureProject(object):
         self.note = 'New project'
         self.layout = MeasureLayout()
         self.process = []
-        self.results = []
-        self.report = []
+        self.calculate = []
+        self.results = MeasureResult()
+        self.report = None
+
+    def __str__(self):
+        ret = "ID:" + str(self.id) + "\n"
+        ret += "NAME:" + self.name + "\n"
+        ret += "NOTE:" + self.note + "\n"
+        ret += "LAYOUT" + str(self.layout) + "\n"
+        ret += "PROCESS:" + str(self.process) + "\n"
+        ret += "CALCULATE:" + str(self.calculate) + "\n"
+        ret += "RESULT:" + str(self.results) + "\n"
+        return ret
 
 
 if __name__ == '__main__':
-    layout = MeasureLayout()
-    print(layout)
-    process = MeasureProcess()
-    if process._para is None:
-        print('yyy')
-    else:
-        print('NNN')
-    print(process)
-    process.set_process_pause(1)
-    print(process)
-    process.set_process_kinetics(3,kinetics_times=3)
-    print(process)
-    process.execute_process()
+    ii = MeasureProject()
+    print(ii)
+
     """
     read_plate = ReadPlate()
     read_plate.filter["du"] = 1
