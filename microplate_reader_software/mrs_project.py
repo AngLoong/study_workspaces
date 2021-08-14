@@ -14,7 +14,7 @@ class MeasureLayout(object):
     测量布局类
     """
 
-    layout_types = ['none','smp','std','blk','nc','pc']
+    layout_types = ['none', 'smp', 'std', 'blk', 'nc', 'pc']
 
     def __init__(self):
         self.id = 0
@@ -27,8 +27,10 @@ class MeasureLayout(object):
                 header.append(i + j)
         self.type = pd.Series(0, index=header)
         self.num = pd.Series(0, index=header)
-        #print(self.type)
-        #print(self.num)
+        """
+        print(self.type)
+        print(self.num)
+        """
 
     def __str__(self):
         ret = "LAYOUT ID:" + str(self.id) + "\n"
@@ -36,7 +38,7 @@ class MeasureLayout(object):
         for i in range(96):
             ret += self.type.index[i] + ':' +\
                    MeasureLayout.layout_types[self.type.values[i]] +\
-                   str(self.num.values[i]) +'\n'
+                   str(self.num.values[i]) + '\n'
         return ret
 
 
@@ -55,7 +57,7 @@ class MeasureProcess(object):
     def __str__(self):
         ret = 'ID:'
         ret += str(self._id)+'\n'
-        ret += "TYPE:"+MeasureProcess.process_types[self._type]+\
+        ret += "TYPE:"+MeasureProcess.process_types[self._type] +\
             '\n'
         ret += "PARA:"+str(self._para)
         return ret
@@ -65,20 +67,18 @@ class MeasureProcess(object):
         self._type = 0
         self._para = None
 
-    def set_process_pause(self,id_num,minutes=0,seconds=5):
+    def set_process_pause(self, id_num, minutes=0, seconds=5):
         self._id = id_num
         self._type = 4
-        self._para={"minutes":0,"seconds":0}
-        self._para["minutes"] = minutes
-        self._para["seconds"] = seconds
+        self._para = {"minutes": minutes, "seconds": seconds}
 
-    def set_process_door(self,id_num):
+    def set_process_door(self, id_num):
         self._id = id_num
         self._type = 3
         self._para = None
 
-    def set_process_measure(self,id_num,\
-                            du=1,first_filter_num=2,second_filter_num=4,\
+    def set_process_measure(self, id_num,
+                            du=1, first_filter_num=2, second_filter_num=4,
                             shake_strength=2, shake_seconds=0):
         self._id = id_num
         self._type = 1
@@ -86,9 +86,9 @@ class MeasureProcess(object):
         shake_para = {"strength": shake_strength, "seconds": shake_seconds}
         self._para = {"filter": filter_para, "shake": shake_para}
 
-    def set_process_kinetics(self, id_num,\
-                             du=1, first_filter_num=2, second_filter_num=4,\
-                             shake_strength=2, shake_seconds=0,\
+    def set_process_kinetics(self, id_num,
+                             du=1, first_filter_num=2, second_filter_num=4,
+                             shake_strength=2, shake_seconds=0,
                              kinetics_times=5, kinetics_minutes=0, kinetics_seconds=5):
         self._id = id_num
         self._type = 2
@@ -132,8 +132,8 @@ class MeasureCalculate(object):
     """
     计算方法类
     """
-    calculate_types = ['none','blank subtraction', 'average', 'SD', 'CV%',\
-                       'standard curve', 'kinetic',\
+    calculate_types = ['none', 'blank subtraction', 'average', 'SD', 'CV%',
+                       'standard curve', 'kinetic',
                        'quantitative', 'qualitative']
     quantitative_concentration_handle = ['concentration', 'log']
     quantitative_od_handle = ['od', 'log', 'bi/b0*100%']
@@ -196,7 +196,8 @@ class MeasureCalculate(object):
         self._id = id_num
         self._type = 8
         self._para = {"cutoff_formula": cutoff_formula}
-    #TODO:计算操作
+
+    # TODO:计算操作
 
 
 class MeasureResult(object):
@@ -253,11 +254,10 @@ class MeasureProject(object):
         self.name = 'new project'
         self.note = 'New project'
         self.layout = MeasureLayout()
-        self.process = []
-        self.calculate = []
+        self.process_list = []
+        self.calculate_list = []
         self.results = MeasureResult()
         self.reports = None
-
 
 
 if __name__ == '__main__':
