@@ -17,6 +17,8 @@ class MeasureLayout(object):
     layout_types = ['none','smp','std','blk','nc','pc']
 
     def __init__(self):
+        self.id = 0
+        self.name = 'new layout'
         header = []
         letter = list(map(chr, range(ord('A'), ord('H') + 1)))
         num = [str(x) for x in range(1, 13)]
@@ -29,7 +31,8 @@ class MeasureLayout(object):
         #print(self.num)
 
     def __str__(self):
-        ret = ''
+        ret = "LAYOUT ID:" + str(self.id) + "\n"
+        ret += "NAME:" + self.name + "\n"
         for i in range(96):
             ret += self.type.index[i] + ':' +\
                    MeasureLayout.layout_types[self.type.values[i]] +\
@@ -219,7 +222,6 @@ class MeasureResult(object):
         ret += "data:" + str(self.data_df) + "\n"
         return ret
 
-        
 
 class MeasureProject(object):
     """
@@ -227,24 +229,35 @@ class MeasureProject(object):
     """
     
     def __init__(self):
-        self.id = 1
-        self.name = 'test1'
+        self.id = 0
+        self.name = 'new project'
         self.note = 'New project'
         self.layout = MeasureLayout()
-        self.process = []
-        self.calculate = []
+        self.process_list = []
+        self.calculate_list = []
         self.results = MeasureResult()
-        self.report = None
+        self.reports = None
 
     def __str__(self):
         ret = "ID:" + str(self.id) + "\n"
         ret += "NAME:" + self.name + "\n"
         ret += "NOTE:" + self.note + "\n"
         ret += "LAYOUT" + str(self.layout) + "\n"
-        ret += "PROCESS:" + str(self.process) + "\n"
-        ret += "CALCULATE:" + str(self.calculate) + "\n"
+        ret += "PROCESS:" + str(self.process_list) + "\n"
+        ret += "CALCULATE:" + str(self.calculate_list) + "\n"
         ret += "RESULT:" + str(self.results) + "\n"
         return ret
+
+    def clear(self):
+        self.id = 0
+        self.name = 'new project'
+        self.note = 'New project'
+        self.layout = MeasureLayout()
+        self.process = []
+        self.calculate = []
+        self.results = MeasureResult()
+        self.reports = None
+
 
 
 if __name__ == '__main__':
