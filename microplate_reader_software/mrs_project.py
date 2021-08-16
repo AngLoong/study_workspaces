@@ -220,6 +220,7 @@ class MeasureResult(object):
     """
     测量结果类
     """
+
     def __init__(self):
         self._count = 0
         self._current = 0
@@ -237,7 +238,28 @@ class MeasureResult(object):
         ret = "count:" + str(self._count) + "\n"
         ret += "time:" + str(self.time) + "\n"
         ret += "data:" + str(self.data_df) + "\n"
+        ret += "current plate data:\n" + str(self._current) + "\n" + str(self.data_current_plate)
         return ret
+
+    def __clear_current_data(self):
+        for i in range(96):
+            self.data_current_plate[i] = 0
+
+    def get_plate_od_from_list(self, od_list):
+        for i in range(96):
+            self.data_current_plate[i] = od_list[i]
+        self.data_df.insert(self.data_df.shape[1], str(self.data_df.shape[1]+1), od_list)
+        self._count += 1
+        self._current = self.data_df.shape[1]
+
+    def select_current_plate(self, num):
+        if num < self._count + 1:
+            self._current = num
+            self.data_current_plate = self.data_df.loc[:,str(self._current)]
+            return True
+        else:
+            self.__clear_current_data()
+            return False
 
 
 class MeasureProject(object):
@@ -301,20 +323,23 @@ class MeasureProject(object):
 
 
 if __name__ == '__main__':
-    ii = MeasureProject()
-    """
-    ii.layout.name = "hello"
-    ii.layout.type["A1"] = 2
-    ii.layout.num["A1"] = 1
-    ii.layout.type["B1"] = 2
-    ii.layout.num["B1"] = 2
-    ii.layout.type["C1"] = 2
-    ii.layout.num["C1"] = 3
-    ii.layout.type["D1"] = 1
-    ii.layout.num["D1"] = 1
-    """
-    ii.load(0)
-    print(ii)
+    res = MeasureResult()
+    print("=== 1 ===")
+    print(res)
+    ll = range(96)
+    ll2 = [x*0.01 for x in range(100,196)]
+    res.get_plate_od_from_list(ll)
+    print("=== 2 ===")
+    print(res)
+    res.get_plate_od_from_list(ll2)
+    print("=== 3 ===")
+    print(res)
+    res.select_current_plate(1)
+    print("+++ 1 +++")
+    print(res)
+    res.select_current_plate(2)
+    print("+++ 2 +++")
+    print(res)
 
 
     """
