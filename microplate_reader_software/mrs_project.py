@@ -6,6 +6,7 @@
 import numpy as np
 import pandas as pd
 import time
+import json
 from mrs_read_plate import ReadPlate
 
 
@@ -40,6 +41,21 @@ class MeasureLayout(object):
                    MeasureLayout.layout_types[self.type.values[i]] +\
                    str(self.num.values[i]) + '\n'
         return ret
+
+    def to_dict(self):
+        ret_dict = {"id": self.id,
+                    "name": self.name,
+                    "type list": self.type.tolist(),
+                    "num list": self.num.tolist()}
+        return ret_dict
+
+    def from_dict(self, temp_dict):
+        self.id = temp_dict["id"]
+        self.name = temp_dict["name"]
+        for i in range(96):
+            self.type[i] = temp_dict["type list"][i]
+        for i in range(96):
+            self.num[i] = temp_dict["num list"][i]
 
 
 class MeasureProcess(object):
@@ -228,7 +244,9 @@ class MeasureProject(object):
     """
     测量项目类，对测量项目进行管理
     """
-    
+
+    file_path = "./projects/"
+
     def __init__(self):
         self.id = 0
         self.name = 'new project'
@@ -259,10 +277,45 @@ class MeasureProject(object):
         self.results = MeasureResult()
         self.reports = None
 
+    def save(self):
+        temp_path = MeasureProject.file_path + str(self.id)
+        temp_st = {"id": self.id,
+                   "name": self.name,
+                   "note": self.note,
+                   "layout": self.layout.to_dict(),
+                   "process list": self.process_list,
+                   "calculate list": self.calculate_list}
+        with open(temp_path, "w", encoding='utf-8') as f:
+            json.dump(temp_st, f, indent=2)
+
+    def load(self, id_num):
+        temp_path = MeasureProject.file_path + str(id_num)
+        with open(temp_path, "r", encoding='utf-8') as f:
+             temp_st = json.load(f)
+        self.id = temp_st["id"]
+        self.name = temp_st["name"]
+        self.note = temp_st["note"]
+        self.layout.from_dict(temp_st["layout"])
+        self.process_list = temp_st["process list"]
+        self.calculate_list = temp_st["calculate list"]
+
 
 if __name__ == '__main__':
     ii = MeasureProject()
+    """
+    ii.layout.name = "hello"
+    ii.layout.type["A1"] = 2
+    ii.layout.num["A1"] = 1
+    ii.layout.type["B1"] = 2
+    ii.layout.num["B1"] = 2
+    ii.layout.type["C1"] = 2
+    ii.layout.num["C1"] = 3
+    ii.layout.type["D1"] = 1
+    ii.layout.num["D1"] = 1
+    """
+    ii.load(0)
     print(ii)
+
 
     """
     read_plate = ReadPlate()
