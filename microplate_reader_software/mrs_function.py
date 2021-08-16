@@ -30,22 +30,22 @@ def input_id():
     return ret
 
 
-def measure_test(id):
+def measure_test(id_num):
     """
     测试仪器的波长和稳定性，即出厂测试
-    :param id: 仪器编号
+    :param id_num: 仪器编号
     :return: 无
     """
     print("开始测量仪器......")
     read_plate = ReadPlate()
-    #read_plate.mode = 1
+    # read_plate.mode = 1
     read_plate.shake["strength"] = 2
     read_plate.shake["seconds"] = 60
     read_plate.filter["du"] = 1
     read_plate.filter["first_filter_num"] = 1
     read_plate.filter["second_filter_num"] = 4
-    file_name = "./record/" + id + ".csv"
-    measure_time = time.strftime("%Y/%m/%d %H:%M:%S",time.localtime())
+    file_name = "./record/" + id_num + ".csv"
+    measure_time = time.strftime("%Y/%m/%d %H:%M:%S", time.localtime())
     with open("./log.txt", "a+") as f:
         f.write("测试时间："+measure_time)
     print(measure_time)
@@ -53,11 +53,11 @@ def measure_test(id):
     print(read_plate.data)
     with open("./log.txt", "a+") as f:
         f.write("滤光片1测试完成\n")
-    ser_time = pd.Series({"measure time:":measure_time,"":""})
-    ser_time.to_csv(file_name,header=False)
-    ser_temp = pd.Series({"filter num :":read_plate.filter["first_filter_num"]})
-    ser_temp.to_csv(file_name,header=False,mode="a+")
-    export_plate_od_to_csv(file_name,read_plate.data.tolist(),"a+")
+    ser_time = pd.Series({"measure time:": measure_time, "": ""})
+    ser_time.to_csv(file_name, header=False)
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp.to_csv(file_name, header=False, mode="a+")
+    export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     with open("./log.txt", "a+") as f:
         f.write("文件写入完成\n")
     time.sleep(3)
@@ -67,9 +67,9 @@ def measure_test(id):
     with open("./log.txt", "a+") as f:
         f.write("滤光片2测试完成\n")
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :":read_plate.filter["first_filter_num"]})
-    ser_temp.to_csv(file_name,header=False,mode="a+")
-    export_plate_od_to_csv(file_name,read_plate.data.tolist(),"a+")
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp.to_csv(file_name, header=False, mode="a+")
+    export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     with open("./log.txt", "a+") as f:
         f.write("文件写入完成")
     time.sleep(3)
@@ -77,27 +77,27 @@ def measure_test(id):
     read_plate.filter["first_filter_num"] = 3
     read_plate.read_plate()
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :":read_plate.filter["first_filter_num"]})
-    ser_temp.to_csv(file_name,header=False,mode="a+")
-    export_plate_od_to_csv(file_name,read_plate.data.tolist(),"a+")
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp.to_csv(file_name, header=False, mode="a+")
+    export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     time.sleep(3)
     read_plate.shake["seconds"] = 0
     read_plate.filter["first_filter_num"] = 4
     read_plate.read_plate()
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :":read_plate.filter["first_filter_num"]})
-    ser_temp.to_csv(file_name,header=False,mode="a+")
-    export_plate_od_to_csv(file_name,read_plate.data.tolist(),"a+")
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp.to_csv(file_name, header=False, mode="a+")
+    export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     time.sleep(3)
     read_plate.filter["du"] = 2
     read_plate.filter["first_filter_num"] = 2
     read_plate.filter["second_filter_num"] = 4
-    #read_plate.mode = 3
+    # read_plate.mode = 3
     read_plate.kinetics["times"] = 3
     read_plate.kinetics["seconds"] = 3
     df_data = read_plate.read_kinetics()
     df_result = ana_stability(df_data)
-    df_result.to_csv(file_name,mode="a+")
+    df_result.to_csv(file_name, mode="a+")
     print("测量结束!!!")
 
 

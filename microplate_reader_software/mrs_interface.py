@@ -4,7 +4,7 @@
 
 
 import sys
-from PyQt5.QtWidgets import QApplication,QMainWindow
+from PyQt5.QtWidgets import QApplication, QMainWindow
 
 import ui_main
 import ui_project_attributes

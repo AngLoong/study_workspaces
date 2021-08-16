@@ -43,7 +43,7 @@ class ConfigProperty(object):
 
     @classmethod
     def load(cls):
-        with open("./config.json","r",encoding='utf-8') as f:
+        with open("./config.json", "r", encoding='utf-8') as f:
             ConfigProperty.attributes = json.load(f)
 
 

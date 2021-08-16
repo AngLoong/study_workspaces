@@ -17,13 +17,13 @@ class SerialCommunication():
     command_receive_head = bytes(b'\x7c\xc7\x7d\xd7')
     command_receive_tail = bytes(b'\xfc\xfd\xfe\xff')
 
-    def __init__(self,default_baud = 115200,default_port = "COM6",default_time_out = None):
+    def __init__(self, default_baud=115200, default_port="COM6", default_time_out=None):
         cf = ConfigProperty()
         cf.load()
         self.port = cf.attributes["serial settings"]["com"]
         self.baud_rate = cf.attributes["serial settings"]["baud"]
         self.time_out = cf.attributes["serial settings"]["time out"]
-        #self.__ser__ = None
+        self.__ser__ = None
 
     def connect(self):
         self.__ser__ = serial.Serial(self.port,self.baud_rate,timeout=self.time_out)
@@ -37,22 +37,22 @@ class SerialCommunication():
         ret = self.__ser__.write(self.command_send_head+self.command_send_door+self.command_send_tail)
         return ret
 
-    def __change_command_to_float(self,data):
+    def __change_command_to_float(self, data):
         num = int(data[0])
         num += int(data[2]) * 0.1
         num += int(data[3]) * 0.01
         num += int(data[4]) * 0.001
         return num
 
-    def send_read_plate(self,dua,first_filter_num,second_filter_num,\
-                   shake_strength,shake_seconds,\
-                   mode,\
-                   kinetics_times,kinetics_seconds,kinetics_minutes):
+    def send_read_plate(self, dua, first_filter_num, second_filter_num,
+                        shake_strength, shake_seconds,
+                        mode,
+                        kinetics_times, kinetics_seconds, kinetics_minutes):
         command4 = bytes(b'\x01')
-        command5 = bytes([dua,first_filter_num,second_filter_num,\
-                         shake_strength,shake_seconds,
-                         mode,\
-                         kinetics_times,kinetics_seconds,kinetics_minutes])
+        command5 = bytes([dua, first_filter_num, second_filter_num,
+                         shake_strength, shake_seconds,
+                         mode,
+                         kinetics_times, kinetics_seconds, kinetics_minutes])
         command_total = self.command_send_head+command4+command5+self.command_send_tail
         ret = self.__ser__.write(command_total)
         return ret
@@ -60,7 +60,7 @@ class SerialCommunication():
     def receive_result(self):
         re_data = self.__ser__.read(488)
         if re_data[:4] == self.command_receive_head and \
-            re_data[-4:] == self.command_receive_tail:
+           re_data[-4:] == self.command_receive_tail:
             num = 4
             list_data = []
             for i in range(96):

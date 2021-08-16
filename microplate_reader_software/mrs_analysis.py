@@ -21,9 +21,9 @@ def ana_stability(data):
         li_max.append(row_max)
         li_min.append(row_min)
         li_err.append(row_max-row_min)
-        #print("loop",i,row_max,"->",row_min)
-        #max.append(row_max)
-        #min.append(row_min)
+        # print("loop",i,row_max,"->",row_min)
+        # max.append(row_max)
+        # min.append(row_min)
     print("li-max:", li_max)
     print("li-min:", li_min)
     print("li-err:", li_err)
@@ -32,9 +32,11 @@ def ana_stability(data):
             che = True if li_err[i] < 0.01 else False
         if 2 < li_min[i] < 3:
             che = True if li_err[i] < 0.1 else False
+        else:
+            che = True
         li_check.append(che)
-    print("check:",li_check)
-    df.insert(df.shape[1],'max',li_max)
+    print("check:", li_check)
+    df.insert(df.shape[1], 'max', li_max)
     df.insert(df.shape[1], 'min', li_min)
     df.insert(df.shape[1], 'err', li_err)
     df.insert(df.shape[1], 'check', li_check)
@@ -43,18 +45,18 @@ def ana_stability(data):
     return df
 
 
-def ana_blank_subtraction(target,blank):
+def ana_blank_subtraction(target, blank):
     """
     OD减去空白
     :param target:目标值
     :param blank: 空白值
     :return:od value without blank
     """
-    ret = target - blank
-    if ret < 0 :
+    temp_ret = target - blank
+    if ret < 0:
         return 0
     else:
-        return ret
+        return temp_ret
 
 
 def ana_get_average(target_list):
@@ -81,8 +83,9 @@ def ana_get_cv(target_list):
     temp_arr = np.array(target_list)
     return temp_arr.std()/temp_arr.mean()
 
+
 if __name__ == '__main__':
-    temp_li = [2.3,2.2,2.6,2.8,2.1,2.3,2.2,2.2,2.4]
+    temp_li = [2.3, 2.2, 2.6, 2.8, 2.1, 2.3, 2.2, 2.2, 2.4]
     ret = ana_get_average(temp_li)
     print("ava:"+str(ret))
     ret = ana_get_sd(temp_li)
