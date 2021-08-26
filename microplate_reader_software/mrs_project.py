@@ -300,7 +300,7 @@ class MeasureProject(object):
         self.reports = None
 
     def save(self):
-        temp_path = MeasureProject.file_path + str(self.id)
+        temp_path = MeasureProject.file_path + str(self.id) + ".json"
         temp_st = {"id": self.id,
                    "name": self.name,
                    "note": self.note,
@@ -311,7 +311,7 @@ class MeasureProject(object):
             json.dump(temp_st, f, indent=2)
 
     def load(self, id_num):
-        temp_path = MeasureProject.file_path + str(id_num)
+        temp_path = MeasureProject.file_path + str(id_num) + ".json"
         with open(temp_path, "r", encoding='utf-8') as f:
              temp_st = json.load(f)
         self.id = temp_st["id"]
