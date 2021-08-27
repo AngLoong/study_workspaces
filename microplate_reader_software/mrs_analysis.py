@@ -7,7 +7,7 @@ import numpy as np
 import pandas as pd
 
 
-def ana_stability(data):
+def ana_stability(data):  # TODO:改名
     df = pd.DataFrame()
     df = data
     li_err = []
@@ -80,15 +80,28 @@ def ana_get_sd(target_list):
 
 
 def ana_get_cv(target_list):
+    """
+    计算变异系数CV
+    :param target_list:数据源列表
+    :return: 变异系数
+    """
     temp_arr = np.array(target_list)
     return temp_arr.std()/temp_arr.mean()
 
 
+def calculate_custom_formula(exp,li_var,li_value):
+    if len(li_var) != len(li_value):
+        return None
+    else:
+        for i in range(len(li_var)):
+            temp = li_var[i] + "=" + str(li_value[i])
+            exec(temp)
+        return eval(exp)
+
+
 if __name__ == '__main__':
-    temp_li = [2.3, 2.2, 2.6, 2.8, 2.1, 2.3, 2.2, 2.2, 2.4]
-    ret = ana_get_average(temp_li)
-    print("ava:"+str(ret))
-    ret = ana_get_sd(temp_li)
-    print("sd:"+str(ret))
-    ret = ana_get_cv(temp_li)
-    print("cv:"+str(ret))
+    li1 = ['a','b','c']
+    li2 = [1,2,3]
+    exp = "a*b+c**2"
+    rr = calculate_custom_formula(exp,li1,li2)
+    print(rr)

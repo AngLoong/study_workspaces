@@ -198,7 +198,7 @@ class MeasureCalculate(object):
         self._type = 5
         self._para = None
 
-    def set_calculate_kinetic(self, id_num, objective_area):
+    def set_calculate_kinetic_curve(self, id_num, objective_area):
         self._id = id_num
         self._type = 6
         self._para = {"objective area": objective_area}
@@ -323,36 +323,4 @@ class MeasureProject(object):
 
 
 if __name__ == '__main__':
-    res = MeasureResult()
-    print("=== 1 ===")
-    print(res)
-    ll = range(96)
-    ll2 = [x*0.01 for x in range(100,196)]
-    res.get_plate_od_from_list(ll)
-    print("=== 2 ===")
-    print(res)
-    res.get_plate_od_from_list(ll2)
-    print("=== 3 ===")
-    print(res)
-    res.select_current_plate(1)
-    print("+++ 1 +++")
-    print(res)
-    res.select_current_plate(2)
-    print("+++ 2 +++")
-    print(res)
-
-
-    """
-    read_plate = ReadPlate()
-    read_plate.filter["du"] = 1
-    read_plate.filter["first_filter_num"] = 2
-    read_plate.filter["second_filter_num"] = 4
-    read_plate.shake["strength"] = 2
-    read_plate.shake["seconds"] = 5
-    read_plate.mode = 3
-    read_plate.kinetics["times"] = 1
-    read_plate.kinetics["minutes"] = 0
-    read_plate.kinetics["seconds"] = 3
-    df_result = read_plate.read_kinetics()
-    print(df_result)
-    """
+    pass

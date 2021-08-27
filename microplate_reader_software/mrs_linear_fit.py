@@ -19,15 +19,15 @@ class LinearFit(object):
     exp,线性方程，poly1d类型
     """
 
-    #data = pd.DataFrame()
-    #r = 0
-    #exp = np.poly1d()
+    # data = pd.DataFrame()
+    # r = 0
+    # exp = np.poly1d()
 
-    def __init__(self,list_x,list_y,std_count=6):
+    def __init__(self, list_x, list_y, point_count=6):
         """
         将所有的属性初始化为空白
         """
-        self.count = std_count
+        self.count = point_count
         self.axis_x_data = list_x
         self.axis_y_data = list_y
         self.r = None
@@ -51,7 +51,7 @@ class LinearFit(object):
 
         """
 
-        fun_para = polyfit(self.axis_x_data,self.axis_y_data,order)
+        fun_para = polyfit(self.axis_x_data, self.axis_y_data, order)
         return poly1d(fun_para)
 
     def __rsquared(self):
@@ -68,19 +68,19 @@ class LinearFit(object):
         Raises:
 
         """
-        slope,intercept,r_value,p_value,std_err = stats.linregress(self.axis_x_data,self.axis_y_data)
+        slope, intercept, r_value, p_value, std_err = stats.linregress(self.axis_x_data, self.axis_y_data)
         return r_value
 
     def draw_plot(self):
-        plt.scatter(self.axis_x_data,self.axis_y_data,color='blue')
-        line_x = [self.axis_x_data[0],self.axis_x_data[self.count-1]]
-        line_y = [self.exp(self.axis_x_data[0]),self.exp(self.axis_y_data[self.count-1])]
-        plt.plot(line_x,line_y,color='r')
+        plt.scatter(self.axis_x_data, self.axis_y_data, color='blue')
+        line_x = [self.axis_x_data[0], self.axis_x_data[self.count-1]]
+        line_y = [self.exp(self.axis_x_data[0]), self.exp(self.axis_y_data[self.count-1])]
+        plt.plot(line_x, line_y, color='r')
         plt.show()
 
-    def calculate(self,order=1):
-        if len(self.axis_x_data)==len(self.axis_y_data)==self.count:
-            self.exp =self.__linear_fit(order)
+    def calculate(self, order=1):
+        if len(self.axis_x_data) == len(self.axis_y_data) == self.count:
+            self.exp = self.__linear_fit(order)
             self.r = self.__rsquared()
             print(self.__str__())
             self.draw_plot()
@@ -88,15 +88,16 @@ class LinearFit(object):
         else:
             return False
 
+
 if __name__ == '__main__':
-    linear1=LinearFit([1,2,3,4,5],[0.8,1.9,3.0,3.8,5.1],5)
-    #linear1.axis_x_data = [1,2,3,4,5]
-    #linear1.axis_y_data = [0.8,1.9,3.0,3.8,5.1]
+    linear1 = LinearFit([1, 2, 3, 4, 5], [0.8, 1.9, 3.0, 3.8, 5.1], 5)
+    # linear1.axis_x_data = [1,2,3,4,5]
+    # linear1.axis_y_data = [0.8,1.9,3.0,3.8,5.1]
     linear1.calculate()
-    #print(linear1)
+    # print(linear1)
     x = [1,2,3,4,5]
     y = [0.8,1.9,3.0,3.8,5.1]
-    #line_x = [1,5]
-    #plt.scatter(x,y)
-    #plt.plot(line_x,line_y,color='r')
-    #plt.show()
+    # line_x = [1,5]
+    # plt.scatter(x,y)
+    # plt.plot(line_x,line_y,color='r')
+    # plt.show()
