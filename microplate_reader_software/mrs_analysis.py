@@ -45,7 +45,7 @@ def ana_stability(data):  # TODO:改名
     return df
 
 
-def ana_blank_subtraction(target, blank):
+def blank_subtraction(target, blank):
     """
     OD减去空白
     :param target:目标值
@@ -53,13 +53,13 @@ def ana_blank_subtraction(target, blank):
     :return:od value without blank
     """
     temp_ret = target - blank
-    if ret < 0:
+    if temp_ret < 0:
         return 0
     else:
         return temp_ret
 
 
-def ana_get_average(target_list):
+def get_average(target_list):
     """
     求平均值
     :param target_list:
@@ -69,7 +69,7 @@ def ana_get_average(target_list):
     return temp_arr.mean()
 
 
-def ana_get_sd(target_list):
+def get_sd(target_list):
     """
     计算标准差
     :param target_list:
@@ -79,7 +79,7 @@ def ana_get_sd(target_list):
     return temp_arr.std()
 
 
-def ana_get_cv(target_list):
+def get_cv(target_list):
     """
     计算变异系数CV
     :param target_list:数据源列表
@@ -89,14 +89,21 @@ def ana_get_cv(target_list):
     return temp_arr.std()/temp_arr.mean()
 
 
-def calculate_custom_formula(exp,li_var,li_value):
+def calculate_custom_formula(formula, li_var, li_value):
+    """
+    自定义公式计算
+    :param formula:公式
+    :param li_var: 变量列表
+    :param li_value: 变量值列表
+    :return: 计算结果
+    """
     if len(li_var) != len(li_value):
         return None
     else:
         for i in range(len(li_var)):
             temp = li_var[i] + "=" + str(li_value[i])
             exec(temp)
-        return eval(exp)
+        return eval(formula)
 
 
 if __name__ == '__main__':
