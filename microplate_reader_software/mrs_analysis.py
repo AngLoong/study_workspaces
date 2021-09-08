@@ -107,18 +107,11 @@ def calculate_custom_formula(formula, li_var, li_value):
         return eval(formula)
 
 
-def calculate_liner_fit(li_x, li_y, count):
-    temp_liner = LinearFit(li_x, li_y, count)
-    ret = temp_liner.calculate()
-    if ret is False:
-        return None
-    else:
-        tem1 = {"exp": temp_liner.exp, "r": temp_liner.r, "R2": temp_liner.r**2}
-        return tem1
-
-
 if __name__ == '__main__':
     lx = [1,2,3,4,5,6]
     ly = [0.11,0.21,0.32,0.39,0.54,0.60]
-    aa = calculate_liner_fit(lx,ly,6)
-    print(aa)
+    aa = LinearFit(lx,ly,len(lx))
+    aa.calculate()
+    # print(aa)
+    print(aa.get_y_value(8))
+

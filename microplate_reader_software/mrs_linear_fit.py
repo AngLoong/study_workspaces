@@ -85,10 +85,13 @@ class LinearFit(object):
             self.exp = self.__linear_fit(order)
             self.k, self.b, self.r = self.__para()
             print(self.__str__())
-            self.draw_plot()
+            # self.draw_plot()
             return True
         else:
             return False
+
+    def get_y_value(self, x_value):
+        return self.exp(x_value)
 
 
 if __name__ == '__main__':
@@ -96,6 +99,7 @@ if __name__ == '__main__':
     # linear1.axis_x_data = [1,2,3,4,5]
     # linear1.axis_y_data = [0.8,1.9,3.0,3.8,5.1]
     linear1.calculate()
+    print(linear1.get_y_value(9))
     # print(linear1)
     x = [1,2,3,4,5,6]
     y = [0.8,1.9,3.0,3.8,5.1,6.7]
