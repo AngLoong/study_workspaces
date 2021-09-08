@@ -1,10 +1,11 @@
 """
-分析仪器性能参数
+仪器各种分析计算方法
 """
 
 
 import numpy as np
 import pandas as pd
+from mrs_linear_fit import LinearFit
 
 
 def ana_stability(data):  # TODO:改名
@@ -106,9 +107,18 @@ def calculate_custom_formula(formula, li_var, li_value):
         return eval(formula)
 
 
+def calculate_liner_fit(li_x, li_y, count):
+    temp_liner = LinearFit(li_x, li_y, count)
+    ret = temp_liner.calculate()
+    if ret is False:
+        return None
+    else:
+        tem1 = {"exp": temp_liner.exp, "r": temp_liner.r, "R2": temp_liner.r**2}
+        return tem1
+
+
 if __name__ == '__main__':
-    li1 = ['a','b','c']
-    li2 = [1,2,3]
-    exp = "a*b+c**2"
-    rr = calculate_custom_formula(exp,li1,li2)
-    print(rr)
+    lx = [1,2,3,4,5,6]
+    ly = [0.11,0.21,0.32,0.39,0.54,0.60]
+    aa = calculate_liner_fit(lx,ly,6)
+    print(aa)
