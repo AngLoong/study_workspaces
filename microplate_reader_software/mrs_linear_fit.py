@@ -40,7 +40,7 @@ class LinearFit(object):
         res += "\nexp:"+str(self.exp)+"\nr:"+str(self.r)+"\nk:"+str(self.k)+"\nb:"+str(self.b)
         return res
 
-    def __linear_fit(self,order=1):
+    def __linear_fit(self, order=1):
         """
         计算线性拟合的公式
 
@@ -74,6 +74,10 @@ class LinearFit(object):
         return slope, intercept, r_value
 
     def draw_plot(self):
+        """
+
+        :return:无
+        """
         plt.scatter(self.axis_x_data, self.axis_y_data, color='blue')
         line_x = [self.axis_x_data[0], self.axis_x_data[self.count-1]]
         line_y = [self.exp(self.axis_x_data[0]), self.exp(self.axis_x_data[self.count-1])]
@@ -81,6 +85,11 @@ class LinearFit(object):
         plt.show()
 
     def calculate(self, order=1):
+        """
+
+        :param order:拟合方程类型，默认1为线性
+        :return: 无
+        """
         if len(self.axis_x_data) == len(self.axis_y_data) == self.count:
             self.exp = self.__linear_fit(order)
             self.k, self.b, self.r = self.__para()
@@ -91,6 +100,11 @@ class LinearFit(object):
             return False
 
     def get_y_value(self, x_value):
+        """
+
+        :param x_value:x值
+        :return: 结果y值
+        """
         return self.exp(x_value)
 
 
