@@ -14,14 +14,14 @@ class LinearFit(object):
     该类对数据进行线性拟合
 
     Attributes:
-    data,原始数据，DataFrame二维表
+    count,数据点个数
+    axis_x_data,X坐标列表
+    axis_y_data,Y坐标列表
+    k,方程斜率
+    b,方程截距
     r,线性回归系数
     exp,线性方程，poly1d类型
     """
-
-    # data = pd.DataFrame()
-    # r = 0
-    # exp = np.poly1d()
 
     def __init__(self, list_x, list_y, point_count=6):
         """
@@ -58,14 +58,12 @@ class LinearFit(object):
 
     def __para(self):
         """
-        进行线性拟合，并计算R2.
+        进行线性拟合，并计算r.
 
         Args:
-        x,x轴数据列表
-        y,y轴数据列表
 
         Returns:
-        计算得到的方程k,b,r,R2
+        计算得到的方程k,b,r
 
         Raises:
 
@@ -86,7 +84,7 @@ class LinearFit(object):
 
     def calculate(self, order=1):
         """
-
+        计算
         :param order:拟合方程类型，默认1为线性
         :return: 无
         """
@@ -101,7 +99,7 @@ class LinearFit(object):
 
     def get_y_value(self, x_value):
         """
-
+        通过x计算y值
         :param x_value:x值
         :return: 结果y值
         """
