@@ -2,7 +2,6 @@
 定义项目类，对项目进行管理，每个会话调用项目进行管理
 """
 
-
 import numpy as np
 import pandas as pd
 import time
@@ -37,8 +36,8 @@ class MeasureLayout(object):
         ret = "LAYOUT ID:" + str(self.id) + "\n"
         ret += "NAME:" + self.name + "\n"
         for i in range(96):
-            ret += self.type.index[i] + ':' +\
-                   MeasureLayout.layout_types[self.type.values[i]] +\
+            ret += self.type.index[i] + ':' + \
+                   MeasureLayout.layout_types[self.type.values[i]] + \
                    str(self.num.values[i]) + '\n'
         return ret
 
@@ -72,10 +71,10 @@ class MeasureProcess(object):
 
     def __str__(self):
         ret = 'ID:'
-        ret += str(self._id)+'\n'
-        ret += "TYPE:"+MeasureProcess.process_types[self._type] +\
-            '\n'
-        ret += "PARA:"+str(self._para)
+        ret += str(self._id) + '\n'
+        ret += "TYPE:" + MeasureProcess.process_types[self._type] + \
+               '\n'
+        ret += "PARA:" + str(self._para)
         return ret
 
     def clear_process(self):
@@ -139,7 +138,7 @@ class MeasureProcess(object):
                 read_plate.read_plate()
                 data_list.append(read_plate.data)
                 if i < self._para["kinetics"]["times"] - 1:
-                    time.sleep(self._para["kinetics"]["minutes"]*60 + self._para["kinetics"]["seconds"])
+                    time.sleep(self._para["kinetics"]["minutes"] * 60 + self._para["kinetics"]["seconds"])
             print("-----------------")
             print(data_list)
 
@@ -162,10 +161,10 @@ class MeasureCalculate(object):
 
     def __str__(self):
         ret = 'ID:'
-        ret += str(self._id)+'\n'
-        ret += "TYPE:"+MeasureCalculate.calculate_types[self._type] +\
-            '\n'
-        ret += "PARA:"+str(self._para)
+        ret += str(self._id) + '\n'
+        ret += "TYPE:" + MeasureCalculate.calculate_types[self._type] + \
+               '\n'
+        ret += "PARA:" + str(self._para)
         return ret
 
     def clear_calculate(self):
@@ -248,14 +247,14 @@ class MeasureResult(object):
     def get_plate_od_from_list(self, od_list):
         for i in range(96):
             self.data_current_plate[i] = od_list[i]
-        self.data_df.insert(self.data_df.shape[1], str(self.data_df.shape[1]+1), od_list)
+        self.data_df.insert(self.data_df.shape[1], str(self.data_df.shape[1] + 1), od_list)
         self._count += 1
         self._current = self.data_df.shape[1]
 
     def select_current_plate(self, num):
         if num < self._count + 1:
             self._current = num
-            self.data_current_plate = self.data_df.loc[:,str(self._current)]
+            self.data_current_plate = self.data_df.loc[:, str(self._current)]
             return True
         else:
             self.__clear_current_data()
@@ -313,7 +312,7 @@ class MeasureProject(object):
     def load(self, id_num):
         temp_path = MeasureProject.file_path + str(id_num) + ".json"
         with open(temp_path, "r", encoding='utf-8') as f:
-             temp_st = json.load(f)
+            temp_st = json.load(f)
         self.id = temp_st["id"]
         self.name = temp_st["name"]
         self.note = temp_st["note"]
