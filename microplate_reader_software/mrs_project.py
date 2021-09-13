@@ -10,8 +10,13 @@ from mrs_read_plate import ReadPlate
 
 
 class MeasureLayout(object):
-    """
-    测量布局类
+    """测量布局类
+    
+    用于保存、设置测量项目的布局
+
+    Attributes:
+        id:ID号,保存布局时需要
+        name:布局名称，保存布局时需要
     """
 
     layout_types = ['none', 'smp', 'std', 'blk', 'nc', 'pc']
@@ -58,8 +63,13 @@ class MeasureLayout(object):
 
 
 class MeasureProcess(object):
-    """
-    检测流程类 
+    """检测流程类 
+
+    设置该检测流程的类型、参数等信息，并可以存储与读取
+
+    id:编号，保护变量，项目流程列表中的编号。
+    type:类型，保护变量
+    para:参数，保护变量，根据类型的不同参数内容也不一样
     """
 
     process_types = ['none', 'measure', 'kinetic', 'door', 'pause']
@@ -144,8 +154,14 @@ class MeasureProcess(object):
 
 
 class MeasureCalculate(object):
-    """
-    计算方法类
+    """计算方法类
+
+    定义计算方法的类型、计算参数以及执行计算操作。
+
+    Attributes:
+        id:计算列表中的编号，保护变量
+        type:计算的类型，保护变量
+        para:计算的参数，保护变量
     """
     calculate_types = ['none', 'blank subtraction', 'average', 'SD', 'CV%',
                        'standard curve', 'kinetic',
@@ -216,8 +232,16 @@ class MeasureCalculate(object):
 
 
 class MeasureResult(object):
-    """
-    测量结果类
+    """测量结果类
+
+    存储测量计算得到的结果
+
+    Attributes:
+        _count:OD值板数
+        _current:当前OD值板序号
+        time:测量时间
+        od_data_current_plate:当前选择的整板OD值。
+        od_data_df:所有OD值列表，为DF类型
     """
 
     def __init__(self):
@@ -230,31 +254,31 @@ class MeasureResult(object):
         for j in num:
             for i in letter:
                 header.append(i + j)
-        self.data_current_plate = pd.Series(0.0, index=header)
-        self.data_df = pd.DataFrame(index=header)
+        self.od_data_current_plate = pd.Series(0.0, index=header)
+        self.od_data_df = pd.DataFrame(index=header)
 
     def __str__(self):
         ret = "count:" + str(self._count) + "\n"
         ret += "time:" + str(self.time) + "\n"
-        ret += "data:" + str(self.data_df) + "\n"
-        ret += "current plate data:\n" + str(self._current) + "\n" + str(self.data_current_plate)
+        ret += "data:" + str(self.od_data_df) + "\n"
+        ret += "current plate data:\n" + str(self._current) + "\n" + str(self.od_data_current_plate)
         return ret
 
     def __clear_current_data(self):
         for i in range(96):
-            self.data_current_plate[i] = 0
+            self.od_data_current_plate[i] = 0
 
     def get_plate_od_from_list(self, od_list):
         for i in range(96):
-            self.data_current_plate[i] = od_list[i]
-        self.data_df.insert(self.data_df.shape[1], str(self.data_df.shape[1] + 1), od_list)
+            self.od_data_current_plate[i] = od_list[i]
+        self.od_data_df.insert(self.od_data_df.shape[1], str(self.od_data_df.shape[1] + 1), od_list)
         self._count += 1
-        self._current = self.data_df.shape[1]
+        self._current = self.od_data_df.shape[1]
 
     def select_current_plate(self, num):
         if num < self._count + 1:
             self._current = num
-            self.data_current_plate = self.data_df.loc[:, str(self._current)]
+            self.od_data_current_plate = self.od_data_df.loc[:, str(self._current)]
             return True
         else:
             self.__clear_current_data()
@@ -262,8 +286,19 @@ class MeasureResult(object):
 
 
 class MeasureProject(object):
-    """
-    测量项目类，对测量项目进行管理
+    """项目设置
+
+    测量项目的内容，参数，流程等进行设置，并可以进行存储。
+
+    Attributes:
+        id:项目ID号，值唯一
+        name:项目名称
+        note:项目说明
+        layout:项目布局，为布局类
+        process_list:流程列表，为流程类的列表
+        calculate_list:计算过程列表，为计算类的列表
+        results:结果，为结果类
+        reports:# TODO(ayl):待补充
     """
 
     file_path = "./projects/"
