@@ -26,7 +26,7 @@ class ReadPlate():
         print(self.filter)
         self.shake = {"strength": 2, "seconds": 0}
         print(self.shake)
-        #self.mode = 1
+        # self.mode = 1
         self.kinetics = {"times": 1, "minutes": 0, "seconds": 5}
         print(self.kinetics)
         self.com = SerialCommunication()
