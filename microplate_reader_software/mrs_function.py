@@ -55,43 +55,43 @@ def measure_test(id_num):
         f.write("滤光片1测试完成\n")
     ser_time = pd.Series({"measure time:": measure_time, "": ""})
     ser_time.to_csv(file_name, header=False)
-    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first filter num"]})
     ser_temp.to_csv(file_name, header=False, mode="a+")
     export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     with open("./log.txt", "a+") as f:
         f.write("文件写入完成\n")
     time.sleep(3)
     read_plate.shake["seconds"] = 0
-    read_plate.filter["first_filter_num"] = 2
+    read_plate.filter["first filter num"] = 2
     read_plate.read_plate()
     with open("./log.txt", "a+") as f:
         f.write("滤光片2测试完成\n")
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first filter num"]})
     ser_temp.to_csv(file_name, header=False, mode="a+")
     export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     with open("./log.txt", "a+") as f:
         f.write("文件写入完成")
     time.sleep(3)
     read_plate.shake["seconds"] = 0
-    read_plate.filter["first_filter_num"] = 3
+    read_plate.filter["first filter num"] = 3
     read_plate.read_plate()
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first filter num"]})
     ser_temp.to_csv(file_name, header=False, mode="a+")
     export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     time.sleep(3)
     read_plate.shake["seconds"] = 0
-    read_plate.filter["first_filter_num"] = 4
+    read_plate.filter["first filter num"] = 4
     read_plate.read_plate()
     print(read_plate.data)
-    ser_temp = pd.Series({"filter num :": read_plate.filter["first_filter_num"]})
+    ser_temp = pd.Series({"filter num :": read_plate.filter["first filter num"]})
     ser_temp.to_csv(file_name, header=False, mode="a+")
     export_plate_od_to_csv(file_name, read_plate.data.tolist(), "a+")
     time.sleep(3)
     read_plate.filter["du"] = 2
-    read_plate.filter["first_filter_num"] = 2
-    read_plate.filter["second_filter_num"] = 4
+    read_plate.filter["first filter num"] = 2
+    read_plate.filter["second filter num"] = 4
     # read_plate.mode = 3
     read_plate.kinetics["times"] = 3
     read_plate.kinetics["seconds"] = 3

@@ -47,6 +47,12 @@ class MeasureLayout(object):
         return ret
 
     def to_dict(self):
+        """转换为字典
+
+        将参数转换为字典形式返回
+
+        :return:参数，字典类型
+        """
         ret_dict = {"id": self.id,
                     "name": self.name,
                     "type list": self.type.tolist(),
@@ -54,6 +60,13 @@ class MeasureLayout(object):
         return ret_dict
 
     def from_dict(self, temp_dict):
+        """从字典导入参数
+
+        从外部字典变量导入参数
+
+        :param temp_dict: 参数组成的字典
+        :return: 无
+        """
         self.id = temp_dict["id"]
         self.name = temp_dict["name"]
         for i in range(96):
@@ -107,7 +120,7 @@ class MeasureProcess(object):
                             shake_strength=2, shake_seconds=0):
         self._id = id_num
         self._type = 1
-        filter_para = {"du": du, "first_filter_num": first_filter_num, "second_filter_num": second_filter_num}
+        filter_para = {"du": du, "first filter num": first_filter_num, "second filter num": second_filter_num}
         shake_para = {"strength": shake_strength, "seconds": shake_seconds}
         self._para = {"filter": filter_para, "shake": shake_para}
 
@@ -117,7 +130,7 @@ class MeasureProcess(object):
                              kinetics_times=5, kinetics_minutes=0, kinetics_seconds=5):
         self._id = id_num
         self._type = 2
-        filter_para = {"du": du, "first_filter_num": first_filter_num, "second_filter_num": second_filter_num}
+        filter_para = {"du": du, "first filter num": first_filter_num, "second filter num": second_filter_num}
         shake_para = {"strength": shake_strength, "seconds": shake_seconds}
         kinetics_para = {"times": kinetics_times, "minutes": kinetics_minutes, "seconds": kinetics_seconds}
         self._para = {"filter": filter_para, "shake": shake_para, "kinetics": kinetics_para}
@@ -152,6 +165,17 @@ class MeasureProcess(object):
             print("-----------------")
             print(data_list)
 
+    def to_dict(self):
+        ret_dict = {"id": self._id,
+                    "type": self._type,
+                    "para": self._para}
+        return ret_dict
+
+    def from_dict(self,temp_dict):
+        self._id = temp_dict["id"]
+        self._type = temp_dict["type"]
+        self._para = temp_dict["para"]
+
 
 class MeasureCalculate(object):
     """计算方法类
@@ -159,9 +183,9 @@ class MeasureCalculate(object):
     定义计算方法的类型、计算参数以及执行计算操作。
 
     Attributes:
-        id:计算列表中的编号，保护变量
-        type:计算的类型，保护变量
-        para:计算的参数，保护变量
+        _id:计算列表中的编号，保护变量
+        _type:计算的类型，保护变量
+        _para:计算的参数，保护变量
     """
     calculate_types = ['none', 'blank subtraction', 'average', 'SD', 'CV%',
                        'standard curve', 'kinetic',
@@ -237,17 +261,19 @@ class MeasureResult(object):
     存储测量计算得到的结果
 
     Attributes:
-        _count:OD值板数
-        _current:当前OD值板序号
+        id:序号
         time:测量时间
         od_data_current_plate:当前选择的整板OD值。
         od_data_df:所有OD值列表，为DF类型
+        _count:OD值板数
+        _current:当前OD值板序号
     """
 
     def __init__(self):
+        self.id = 0
+        self.time = None
         self._count = 0
         self._current = 0
-        self.time = None
         header = []
         letter = list(map(chr, range(ord('A'), ord('H') + 1)))
         num = [str(x) for x in range(1, 13)]
@@ -339,7 +365,7 @@ class MeasureProject(object):
                    "name": self.name,
                    "note": self.note,
                    "layout": self.layout.to_dict(),
-                   "process list": self.process_list,
+                   "process list": [self.process_list[i].to_dict() for i in range(len(self.process_list))],
                    "calculate list": self.calculate_list}
         with open(temp_path, "w", encoding='utf-8') as f:
             json.dump(temp_st, f, indent=2)
@@ -357,5 +383,10 @@ class MeasureProject(object):
 
 
 if __name__ == '__main__':
-    pass
+    aa = MeasureProject()
+    bb = MeasureProcess()
+    bb.set_process_measure(1)
+    aa.process_list.append(bb)
+    aa.save()
+
 
