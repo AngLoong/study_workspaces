@@ -4,6 +4,7 @@
 
 import pandas as pd
 import numpy as np
+import os
 
 
 def export_plate_od_to_csv(file_name, od_data, write_mode):
@@ -44,10 +45,24 @@ def export_plate_to_csv(du, first, second, od):
     export_data1.to_csv("./22.csv", mode="a+")
 
 
+def get_root_path():
+    return os.getcwd()
+
+
+def check_dir_exist(path_str):
+    return os.path.isdir(path_str)
+
+
+def new_folder(position_path, folder_name):
+    if not os.path.isdir(position_path):
+        print("no path")
+        return -1
+    else:
+        os.mkdir(os.path.join(position_path, folder_name))
+        return 0
+
 
 if __name__ == '__main__':
-    data = []
-    for i in range(12):
-        for j in range(8):
-            data.append(i * 10 + j)
-    export_plate_to_csv(1, 1, 1, data)
+    print(get_root_path())
+    ret = new_folder(get_root_path(), "hello")
+    print(ret)

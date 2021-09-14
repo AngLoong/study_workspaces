@@ -146,8 +146,6 @@ class MeasureProcess(object):
                 read_plate.shake[key] = self._para["shake"][key]
             read_plate.read_plate()
             data = read_plate.data
-            print("=============\n")
-            print(data)
         elif self._type == 2:
             data_list = []
             read_plate = ReadPlate()
@@ -171,7 +169,7 @@ class MeasureProcess(object):
                     "para": self._para}
         return ret_dict
 
-    def from_dict(self,temp_dict):
+    def from_dict(self, temp_dict):
         self._id = temp_dict["id"]
         self._type = temp_dict["type"]
         self._para = temp_dict["para"]
@@ -364,7 +362,6 @@ class MeasureProject(object):
         temp_st = {"id": self.id,
                    "name": self.name,
                    "note": self.note,
-                   "layout": self.layout.to_dict(),
                    "process list": [self.process_list[i].to_dict() for i in range(len(self.process_list))],
                    "calculate list": self.calculate_list}
         with open(temp_path, "w", encoding='utf-8') as f:
@@ -377,16 +374,20 @@ class MeasureProject(object):
         self.id = temp_st["id"]
         self.name = temp_st["name"]
         self.note = temp_st["note"]
-        self.layout.from_dict(temp_st["layout"])
         self.process_list = temp_st["process list"]
         self.calculate_list = temp_st["calculate list"]
 
 
 if __name__ == '__main__':
+    """
     aa = MeasureProject()
     bb = MeasureProcess()
     bb.set_process_measure(1)
     aa.process_list.append(bb)
     aa.save()
-
+    """
+    aa = MeasureProject()
+    aa.load(0)
+    print("================")
+    print(aa)
 
