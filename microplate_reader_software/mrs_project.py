@@ -7,6 +7,7 @@ import pandas as pd
 import time
 import json
 from mrs_read_plate import ReadPlate
+import mrs_file
 
 
 class MeasureLayout(object):
@@ -326,6 +327,8 @@ class MeasureProject(object):
     """
 
     file_path = "./projects/"
+    result_folder = "result"
+    layout_folder = "layout"
 
     def __init__(self):
         self.id = 0
@@ -358,7 +361,13 @@ class MeasureProject(object):
         self.reports = None
 
     def save(self):
-        temp_path = MeasureProject.file_path + str(self.id) + ".json"
+        if mrs_file.check_dir_exist(mrs_file.link_dir(MeasureProject.file_path, str(self.id))):
+            print("error")
+        else:
+            mrs_file.new_folder(MeasureProject.file_path, str(self.id))
+            mrs_file.new_folder(mrs_file.link_dir(MeasureProject.file_path, str(self.id)), MeasureProject.layout_folder)
+            mrs_file.new_folder(mrs_file.link_dir(MeasureProject.file_path, str(self.id)), MeasureProject.result_folder)
+        temp_path = MeasureProject.file_path + str(self.id) + "/" + str(self.id) + ".json"
         temp_st = {"id": self.id,
                    "name": self.name,
                    "note": self.note,
@@ -368,7 +377,7 @@ class MeasureProject(object):
             json.dump(temp_st, f, indent=2)
 
     def load(self, id_num):
-        temp_path = MeasureProject.file_path + str(id_num) + ".json"
+        temp_path = MeasureProject.file_path + str(id_num) + "/" + str(id_num) + ".json"
         with open(temp_path, "r", encoding='utf-8') as f:
             temp_st = json.load(f)
         self.id = temp_st["id"]
@@ -386,8 +395,10 @@ if __name__ == '__main__':
     aa.process_list.append(bb)
     aa.save()
     """
+
     aa = MeasureProject()
     aa.load(0)
     print("================")
     print(aa)
+
 

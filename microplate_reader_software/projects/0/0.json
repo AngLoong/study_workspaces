@@ -13,8 +13,8 @@
           "second filter num": 4
         },
         "shake": {
-          "strength": 2,
-          "seconds": 0
+          "strength": 1,
+          "seconds": 30
         }
       }
     }

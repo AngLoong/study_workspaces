@@ -53,6 +53,10 @@ def check_dir_exist(path_str):
     return os.path.isdir(path_str)
 
 
+def link_dir(path1, path2):
+    return os.path.join(path1, path2)
+
+
 def new_folder(position_path, folder_name):
     if not os.path.isdir(position_path):
         print("no path")
