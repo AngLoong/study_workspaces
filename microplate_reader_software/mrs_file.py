@@ -8,16 +8,20 @@ import os
 
 
 def export_plate_od_to_csv(file_name, od_data, write_mode):
+    """以96孔板的形式导出为csv文件
+
+    :param file_name:文件路径
+    :param od_data: OD数据，列表
+    :param write_mode: ”a+"表示在文末写入，“w“表示从新写入
+    :return:
+    """
     list_col = []
     for kI in range(12):
         list_col.append(od_data[kI * 8:kI * 8 + 8])
-    print(list_col)
     col = list(map(chr, range(ord('A'), ord('H') + 1)))
     ind = [str(x) for x in range(1, 13)]
-    print("IND:", ind)
-    print("COL:", col)
     export_data1 = pd.DataFrame(list_col, index=ind, columns=col)
-    export_data1 = export_data1.transpose()
+    export_data1 = export_data1.transpose()  # 翻转矩阵
     export_data1.to_csv(file_name, mode=write_mode)
 
 
@@ -67,6 +71,5 @@ def new_folder(position_path, folder_name):
 
 
 if __name__ == '__main__':
-    print(get_root_path())
-    ret = new_folder(get_root_path(), "hello")
-    print(ret)
+    li_od = [0.5 for x in range(96)]
+    export_plate_od_to_csv("2011.csv", li_od, "w")
