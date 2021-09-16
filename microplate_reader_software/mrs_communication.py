@@ -13,11 +13,10 @@ class EquipmentCommunication(object):
     定义软件和设备的通讯协议接口。
 
     Attributes:
-        door_status:仓门状态，1：开，0：关
+
     """
 
     def __init__(self):
-        self.door_status = 0
         self.com = SerialCommunication()
 
     def open_or_close_door(self):
