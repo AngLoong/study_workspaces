@@ -50,18 +50,41 @@ def export_plate_to_csv(du, first, second, od):
 
 
 def get_root_path():
+    """取得根目录路径
+
+    :return: 路径字符串
+    """
     return os.getcwd()
 
 
 def check_dir_exist(path_str):
+    """检查目录路径是否存在
+
+    :param path_str: 路径字符串
+    :return: 1，存在；0，不存在
+    """
     return os.path.isdir(path_str)
 
 
 def link_dir(path1, path2):
+    """连接目录路径
+
+    将两段路径字符串连接起来，避免系统路径分隔符不同造成的差异。
+
+    :param path1: 前段路径
+    :param path2: 后段路径
+    :return: 连接后的路径
+    """
     return os.path.join(path1, path2)
 
 
 def new_folder(position_path, folder_name):
+    """在指定路径下建立目录文件夹
+
+    :param position_path:指定的路径
+    :param folder_name: 文件夹的名字
+    :return: 0，创建成功；1，创建失败
+    """
     if not os.path.isdir(position_path):
         print("no path")
         return -1
