@@ -25,7 +25,7 @@ def export_plate_od_to_csv(file_name, od_data, write_mode):
     export_data1.to_csv(file_name, mode=write_mode)
 
 
-def export_plate_to_csv(du, first, second, od):
+def export_plate_to_csv(du, first, second, od):  # TODO(ayl):可能删除
     export_info = pd.Series({"du:": "1", "first filter:": "450", "second filter:": "630", " ": " "})
     print(export_info)
     list_col = []
