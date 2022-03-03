@@ -246,3 +246,8 @@ v1.33.2
 - 初步调试了测试曲线拟合的python函数。
 - 增加了curve_tool项目用来测试曲线拟合。
 
+v1.33.5
+2022/03/03 16:44
+- curve_tool初步可以调用python函数。
+- mrs_curve_fit.py中进一步完善。
+

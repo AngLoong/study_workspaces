@@ -3,6 +3,7 @@
 import matplotlib.pyplot as plt
 from scipy.optimize import curve_fit
 import numpy as np
+import ast
 
 class CurveFit(object):
     """
@@ -19,6 +20,19 @@ class CurveFit(object):
         self.para_b = 0.0
         self.para_c = 0.0
         self.para_d = 0.0
+        self.smp_plot_shape = '*'
+        self.curve_color = 'r'
+        self.smp_label = 'smp'
+        self.curve_label = 'curve1'
+        self.title = ""
+
+    def check_data(self):
+        if len(self.axis_x_data) != len(self.axis_y_data):
+            return -1
+        elif len(self.axis_x_data) < 4:
+            return -1
+        else:
+            return 0
 
     def func_line(self, x):
         return self.a*x+self.b
@@ -58,6 +72,7 @@ class CurveFit(object):
         popt, pcov = curve_fit(func,self.axis_x_data, self.axis_y_data)
         self.a = popt[0]
         self.b = popt[1]
+        self.title = str(self.a)+'*x+'+str(self.b)+'=y'
         return
 
     def fit_conic(self):
@@ -67,6 +82,7 @@ class CurveFit(object):
         self.a = popt[0]
         self.b = popt[1]
         self.c = popt[2]
+        self.title = str(self.a)+'*x^2+'+str(self.b)+'*x+'+str(self.c)+'=y'
         return
 
     def fit_cubic(self):
@@ -77,6 +93,7 @@ class CurveFit(object):
         self.b = popt[1]
         self.c = popt[2]
         self.d = popt[3]
+        self.title = str(self.a)+'*x^3+' + str(self.b)+'*x^2+'+str(self.c)+'*x+'+str(self.d)+'=y'
         return
 
     def fit_logit_4p(self):
@@ -87,63 +104,80 @@ class CurveFit(object):
         self.b = popt[1]
         self.c = popt[2]
         self.d = popt[3]
+        self.title = "("+str(self.a)+"-"+str(self.d)+")/(1+(x/"+str(self.c)+")^"+str(self.b)+")+"+str(self.d)+"=y"
         return
 
-    def draw_smp_point(self, mark, label_str):
-        plot = plt.plot(self.axis_x_data, self.axis_y_data, mark, label = label_str)
+    def draw_smp_point(self):
+        plot = plt.plot(self.axis_x_data, self.axis_y_data, self.smp_plot_shape, label = self.smp_label)
         return plot
 
-    def draw_curve_ex1(self, color, label_str):
+    def draw_curve_ex1(self):
         yvalues = self.func_ex1(self.axis_x_data)
-        plot = plt.plot(self.axis_x_data, yvalues, color,label = label_str)
+        plot = plt.plot(self.axis_x_data, yvalues, self.curve_color,label = self.curve_label)
         return plot
 
-    def draw_curve_line(self,color,label_str):
+    def draw_curve_line(self):
         yvalues = self.func_line(self.axis_x_data)
-        plot = plt.plot(self.axis_x_data, yvalues, color,label = label_str)
+        plot = plt.plot(self.axis_x_data, yvalues, self.curve_color,label = self.curve_label)
         return plot
 
-    def draw_curve_conic(self, color, label_str):
-        yvalues = self.func_conic(self.axis_x_data)
-        plot = plt.plot(self.axis_x_data, yvalues, color, label = label_str)
+    def draw_curve_conic(self):
+        tempx =np.arange(self.axis_x_data[0],self.axis_x_data[-1], (self.axis_x_data[-1]-self.axis_x_data[0])/20.0)
+        yvalues = self.func_conic(tempx)
+        plot = plt.plot(tempx, yvalues, self.curve_color, label = self.curve_label)
         return plot
 
-    def draw_curve_cubic(self, color, label_str):
-        yvalues = self.func_cubic(self.axis_x_data)
-        plot = plt.plot(self.axis_x_data, yvalues, color, label = label_str)
+    def draw_curve_cubic(self):
+        tempx =np.arange(self.axis_x_data[0],self.axis_x_data[-1], (self.axis_x_data[-1]-self.axis_x_data[0])/20.0)
+        yvalues = self.func_cubic(tempx)
+        plot = plt.plot(tempx, yvalues, self.curve_color, label = self.curve_label)
         return plot
 
-    def draw_curve_logit_4p(self, color, label_str):
-        yvalues = self.func_logit_4p(self.axis_x_data)
-        plot = plt.plot(self.axis_x_data, yvalues, color, label = label_str)
+    def draw_curve_logit_4p(self):
+        tempx =np.arange(self.axis_x_data[0],self.axis_x_data[-1], (self.axis_x_data[-1]-self.axis_x_data[0])/20.0)
+        yvalues = self.func_logit_4p(tempx)
+        plot = plt.plot(tempx, yvalues, self.curve_color, label = self.curve_label)
         return plot
 
-    def show_plot(self, title_str):
+    def show_plot(self):
         plt.xlabel('x axis')
         plt.ylabel('y axis')
         plt.legend(loc = 4)
-        plt.title(title_str)
+        plt.title(self.title)
         plt.show()
+        return
+
+    def fit_curve_and_draw_plot(self, type):
+        if self.check_data() < 0:
+            print("data error")
+            return -2
+        if type == "line":
+            self.fit_line()
+            self.draw_smp_point()
+            self.draw_curve_line()
+        elif type == "conic":
+            self.fit_conic()
+            self.draw_smp_point()
+            self.draw_curve_conic()
+        elif type == "cubic":
+            self.fit_cubic()
+            self.draw_smp_point()
+            self.draw_curve_cubic()
+        elif type == "logit_4p":
+            self.fit_logit_4p()
+            self.draw_smp_point()
+            self.draw_curve_logit_4p()
+        else:
+            print("other error")
+            return -1
+        self.show_plot()
+        return 0
 
 
 if __name__ == '__main__':
+    """
     x = np.arange(1,17,1)
     y = np.array([4.00, 6.40, 8.00, 8.80, 9.22, 9.50, 9.70, 9.86, 10.00, 10.20, 10.32, 10.42, 10.50, 10.55, 10.58, 10.60])
-    """
-    def func(x,a,b):
-        return a*np.exp(b/x)
-    popt, pcov = curve_fit(func, x, y)
-    a = popt[0]
-    b = popt[1]
-    yvals = func(x,a,b)
-    plot1 = plt.plot(x,y,'*',label = 'original values')
-    plot2 = plt.plot(x,yvals,'r',label = 'curve_fit values')
-    plt.xlabel('x axis')
-    plt.ylabel('y axis')
-    plt.legend(loc=4)
-    plt.title('curve_fit')
-    plt.show()
-    """
     aa=CurveFit(x,y)
     #aa.fit_ex1()
     #aa.fit_line()
@@ -157,6 +191,26 @@ if __name__ == '__main__':
     #aa.draw_curve_cubic('r','cubic')
     aa.draw_curve_logit_4p('r', 'logit-4p')
     aa.show_plot("figer")
-
-
-
+    """
+    """
+    listx = np.array
+    listy = np.array
+    listx = ast.literal_eval(input("输入x序列，用'，'隔开数据"))
+    print(listx)
+    listy = ast.literal_eval(input("输入y序列，用','隔开数据"))
+    print(listy)
+    typ = input("输入曲线类型：line,conic,cubic,logit_4p")
+    aa = CurveFit(listx,listy)
+    ret = aa.fit_curve_and_draw_plot(typ)
+    if ret < 0:
+        print("error")
+    """
+    x = np.arange(1,17,1)
+    y = np.array([4.00, 6.40, 8.00, 8.80, 9.22, 9.50, 9.70, 9.86, 10.00, 10.20, 10.32, 10.42, 10.50, 10.55, 10.58, 10.60])
+    listx = np.array(ast.literal_eval(input("输入x序列，用'，'隔开数据")))
+    listy = np.array(ast.literal_eval(input("输入y序列，用','隔开数据")))
+    aa = CurveFit(listx,listy)
+    typ = input("输入曲线类型：line,conic,cubic,logit_4p")
+    ret = aa.fit_curve_and_draw_plot(typ)
+    if ret < 0:
+        print("error")
