@@ -1,0 +1,78 @@
+{
+	"configurations" : 
+	[
+		{
+			"directories" : 
+			[
+				{
+					"build" : ".",
+					"jsonFile" : "directory-.-Debug-d0094a50bb2071803777.json",
+					"minimumCMakeVersion" : 
+					{
+						"string" : "3.16"
+					},
+					"projectIndex" : 0,
+					"source" : ".",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"name" : "Debug",
+			"projects" : 
+			[
+				{
+					"directoryIndexes" : 
+					[
+						0
+					],
+					"name" : "curve_tool",
+					"targetIndexes" : 
+					[
+						0,
+						1,
+						2
+					]
+				}
+			],
+			"targets" : 
+			[
+				{
+					"directoryIndex" : 0,
+					"id" : "curve_tool::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-curve_tool-Debug-0e915e9d9b245fa2a199.json",
+					"name" : "curve_tool",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "curve_tool_autogen::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-curve_tool_autogen-Debug-379de4753c90c2ddf1e3.json",
+					"name" : "curve_tool_autogen",
+					"projectIndex" : 0
+				},
+				{
+					"directoryIndex" : 0,
+					"id" : "curve_tool_autogen_timestamp_deps::@6890427a1f51a3e7e1df",
+					"jsonFile" : "target-curve_tool_autogen_timestamp_deps-Debug-df5449c502e4563fe93f.json",
+					"name" : "curve_tool_autogen_timestamp_deps",
+					"projectIndex" : 0
+				}
+			]
+		}
+	],
+	"kind" : "codemodel",
+	"paths" : 
+	{
+		"build" : "E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug",
+		"source" : "E:/workspaces/python_study/curve_tool/curve_tool"
+	},
+	"version" : 
+	{
+		"major" : 2,
+		"minor" : 3
+	}
+}

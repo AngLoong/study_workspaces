@@ -1,0 +1,2 @@
+#pragma code_page(65001)
+1 /* CREATEPROCESS_MANIFEST_RESOURCE_ID */ 24 /* RT_MANIFEST */ "E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/curve_tool.dir/embed.manifest"

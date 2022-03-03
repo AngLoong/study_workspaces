@@ -1,0 +1,5 @@
+E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/curve_tool.dir
+E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/edit_cache.dir
+E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/rebuild_cache.dir
+E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/curve_tool_autogen_timestamp_deps.dir
+E:/workspaces/python_study/curve_tool/build-curve_tool-Desktop_Qt_6_2_3_MSVC2019_64bit-Debug/CMakeFiles/curve_tool_autogen.dir
