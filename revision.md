@@ -251,3 +251,8 @@ v1.33.5
 - curve_tool初步可以调用python函数。
 - mrs_curve_fit.py中进一步完善。
 
+v1.33.6
+2022/03/04 17:09
+- mrs_curve_fit.py中增加半对数函数。
+- mrs_curve_fit.py功能进一步完善。
+
