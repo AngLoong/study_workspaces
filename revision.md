@@ -256,3 +256,9 @@ v1.33.6
 - mrs_curve_fit.py中增加半对数函数。
 - mrs_curve_fit.py功能进一步完善。
 
+v1.34.1
+2022/03/10 16:09
+- microplate_reader_workstation中增加了使用pyqt的OD测量界面文件，并实现了基本功能。
+
+
+
